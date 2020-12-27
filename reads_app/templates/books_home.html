@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books Home</title>
+</head>
+<body>
+    <h1>Welcome {{user.first_name}}!</h1>
+    <h3><a href="reads">Add Book and Review</a></h3>
+    <h3><a href="/">Logout</a></h3>
+    <h3>Recent Book Reviews:</h3>
+
+    {% for Book in book %}
+        {% if Book.id <= 3 %}
+            Book Title: {{Book.title}}<br>
+            Author: {{Book.author.name}}<br>
+            Contributor: {{Book.contributor.first_name}} {{Book.contributor.last_name}}<br>
+            Contributor Review: {{Book.review.content}}<br>
+            Rating: {{Book.review.rating}}<br>
+            Posted on {{Book.review.created_at}}<br>
+            {% if Book.contributor.id == request.session.user_id %} <a href="/{{book.id}}/delete">Delete</a>{% endif %}
+            <hr>
+        {% endif %}
+    {% endfor %}
+
+    <h3>Other Books with Reviews</h3>
+
+    {% for Book in book %}
+        {% if Book.id > 3 %}
+            Book Title: {{Book.title}}<br>
+            Author: {{Book.author.name}}<br>
+            Contributor: {{Book.contributor.first_name}} {{Book.contributor.last_name}}<br>
+            Contributor Review: {{Book.review.content}}<br>
+            {{Book.review.rating}}<br>
+            Posted on {{Book.review.created_at}}<br>
+            {% if Book.contributor.id == request.session.user_id %} <a href="/reads{{book.id}}/delete">Delete</a>{% endif %}
+            <hr>
+        {% endif %}
+    {% endfor %}
+</body>
+</html>
