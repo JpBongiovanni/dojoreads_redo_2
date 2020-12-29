@@ -7,34 +7,36 @@
 </head>
 <body>
     <h1>Welcome {{user.first_name}}!</h1>
-    <h3><a href="reads">Add Book and Review</a></h3>
+    <h3><a href="add_book">Add Book and Review</a></h3>
     <h3><a href="/">Logout</a></h3>
     <h3>Recent Book Reviews:</h3>
 
     {% for Book in book %}
-        {% if Book.id <= 3 %}
-            Book Title: {{Book.title}}<br>
-            Author: {{Book.author.name}}<br>
-            Contributor: {{Book.contributor.first_name}} {{Book.contributor.last_name}}<br>
-            Contributor Review: {{Book.review.content}}<br>
-            Rating: {{Book.review.rating}}<br>
-            Posted on {{Book.review.created_at}}<br>
-            {% if Book.contributor.id == request.session.user_id %} <a href="/{{book.id}}/delete">Delete</a>{% endif %}
+        Book Title: <a href="reads/{{Book.id}}">{{Book.title}}</a><br>
+        Author: {{Book.author.name}}<br>
+        Contributor: {{Book.contributor.first_name}} {{Book.contributor.last_name}}<br>
+        {% for book_reviews in review %}
+            {{book_reviews.poster.first_name}} {{book_reviews.poster.last_name}} says: {{book_reviews.content}}<br>
+            Rating: {{book_reviews.rating}}<br>
+            Posted on: {{book_reviews.created_at}}<br>
             <hr>
-        {% endif %}
+        {% endfor %}
+        {% if Book.contributor.id == request.session.user_id %} <a href="reads/{{Book.id}}/delete">Delete</a>{% endif %}
+        <hr>
+        <hr>
     {% endfor %}
 
     <h3>Other Books with Reviews</h3>
 
     {% for Book in book %}
         {% if Book.id > 3 %}
-            Book Title: {{Book.title}}<br>
+            Book Title: <a href="reads/{{Book.id}}">{{Book.title}}</a><br>
             Author: {{Book.author.name}}<br>
             Contributor: {{Book.contributor.first_name}} {{Book.contributor.last_name}}<br>
-            Contributor Review: {{Book.review.content}}<br>
-            {{Book.review.rating}}<br>
-            Posted on {{Book.review.created_at}}<br>
-            {% if Book.contributor.id == request.session.user_id %} <a href="/reads{{book.id}}/delete">Delete</a>{% endif %}
+            Contributor Review: {{Book.book_reviews.content}}<br>
+            {{Book.book_reviews.rating}}<br>
+            Posted on {{Book.book_reviews.created_at}}<br>
+            {% if Book.contributor.id == request.session.user_id %} <a href="reads/{{Book.id}}/delete">Delete</a>{% endif %}
             <hr>
         {% endif %}
     {% endfor %}

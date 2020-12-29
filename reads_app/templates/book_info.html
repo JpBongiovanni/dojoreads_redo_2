@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Book and Review</title>
+    <title>Book Information</title>
 </head>
 <body>
-    <h1>Add a New Book title and a Review</h1>
-    <h2><a href="/reads">Back</a></h2>
-    <form action="reads/add" method="POST">
+    <p><a href="/reads">Home</a> | <a href="/">Logout</a></p>
+    <h2>{{book.title}}</h2>
+        <h3>Author: {{book.author.name}}</h3>
+        {% for book in Book %}
+        <p>Rating: {{Book.review.rating}}</p>
+        <p>{{Book.review.poster.first_name}} Says: {{Book.review.content}}</p>
+        <p>Posted on: {{Book.review.created_at}}</p>
+        <hr>
+        {% endfor %}
+
+    <form action="reads/add_review" method="POST">
         {% csrf_token %}
-        Book Title: <input type="text" name="title"><br>
-        Author:<br>
-        <!-- Choose from the list: <select name="author" id="author">
-            {% for Author in author %}
-            <option value="{{Author.name}}">{{Author.name}}</option>
-            {% endfor %}
-        </select><br> -->
-        Or add a new author: <input type="text" name="name"><br>
         Review: <textarea name="content"></textarea><br>
         Rating: <select name="rating" id="rating">
             <option value="1">1</option>
