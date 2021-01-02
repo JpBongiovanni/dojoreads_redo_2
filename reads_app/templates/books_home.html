@@ -11,34 +11,24 @@
     <h3><a href="/">Logout</a></h3>
     <h3>Recent Book Reviews:</h3>
 
-    {% for Book in book %}
-        Book Title: <a href="reads/{{Book.id}}">{{Book.title}}</a><br>
-        Author: {{Book.author.name}}<br>
-        Contributor: {{Book.contributor.first_name}} {{Book.contributor.last_name}}<br>
-        {% for book_reviews in review %}
-            {{book_reviews.poster.first_name}} {{book_reviews.poster.last_name}} says: {{book_reviews.content}}<br>
-            Rating: {{book_reviews.rating}}<br>
-            Posted on: {{book_reviews.created_at}}<br>
-            <hr>
-        {% endfor %}
-        {% if Book.contributor.id == request.session.user_id %} <a href="reads/{{Book.id}}/delete">Delete</a>{% endif %}
+    {% for review in recent_reviews %}
+        {{review.book.contributor.id}}<br>
+        Book Title: <a href="{{review.book.id}}">{{review.book.title}}</a><br>
+        Author: {{review.book.author.name}}<br>
+        Contributor: <a href="{{review.book.contributor.id}}">{{review.book.contributor.first_name}} {{review.book.contributor.last_name}}</a><br>
+        <a href="{{review.poster.id}}">{{review.poster.first_name}} {{reviewsposter.last_name}}</a> says: {{review.content}}<br>
+        Rating: {{review.rating}}<br>g
+        Posted on: {{review.created_at}}<br>
+
         <hr>
         <hr>
     {% endfor %}
 
     <h3>Other Books with Reviews</h3>
 
-    {% for Book in book %}
-        {% if Book.id > 3 %}
-            Book Title: <a href="reads/{{Book.id}}">{{Book.title}}</a><br>
-            Author: {{Book.author.name}}<br>
-            Contributor: {{Book.contributor.first_name}} {{Book.contributor.last_name}}<br>
-            Contributor Review: {{Book.book_reviews.content}}<br>
-            {{Book.book_reviews.rating}}<br>
-            Posted on {{Book.book_reviews.created_at}}<br>
-            {% if Book.contributor.id == request.session.user_id %} <a href="reads/{{Book.id}}/delete">Delete</a>{% endif %}
-            <hr>
-        {% endif %}
+    {% for Book in books %}
+            Book Title: <a href="/reads/{{Book.id}}">{{Book.title}}</a><br>
     {% endfor %}
+
 </body>
 </html>

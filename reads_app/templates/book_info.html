@@ -9,14 +9,14 @@
     <p><a href="/reads">Home</a> | <a href="/">Logout</a></p>
     <h2>{{book.title}}</h2>
         <h3>Author: {{book.author.name}}</h3>
-        {% for book in Book %}
-        <p>Rating: {{Book.review.rating}}</p>
-        <p>{{Book.review.poster.first_name}} Says: {{Book.review.content}}</p>
-        <p>Posted on: {{Book.review.created_at}}</p>
-        <hr>
+        {% for book_reviews in book.book_reviews.all %}
+            {{book_reviews.poster.first_name}} {{book_reviews.poster.last_name}} says: {{book_reviews.content}}<br>
+            Rating: {{book_reviews.rating}}<br>
+            Posted on: {{book_reviews.created_at}}<br>
+            <hr>
         {% endfor %}
 
-    <form action="reads/add_review" method="POST">
+    <form action="/reads/{{book.id}}/add_review" method="POST">
         {% csrf_token %}
         Review: <textarea name="content"></textarea><br>
         Rating: <select name="rating" id="rating">

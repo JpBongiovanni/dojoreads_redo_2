@@ -1,0 +1,11 @@
+
+Getting a specific object using a primary key
+
+def index(request):
+
+    context = {
+        "user": User.objects.get(id = request.session['user_id']),
+        "book": Book.objects.all(),
+        "review": Book.objects.get(pk=1).book_reviews.all()
+    }
+    return render(request, "books_home.html", context)
