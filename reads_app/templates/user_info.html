@@ -6,6 +6,14 @@
     <title>User Information</title>
 </head>
 <body>
-    User Name: 
+    <p><a href="/reads">Home</a> | <a href="/">Logout</a></p>
+    Username: {{review_contributor.first_name}} {{review_contributor.last_name}}<br>
+    Email: {{review_contributor.email}}<br>
+    Total Reviews: {{review_contributor.user_reviews.count}}<br>
+
+    Posted Reviews on the following books:<br>
+    {% for books in books_contributed %}
+        {{books.title}}<br>
+    {% endfor %}
 </body>
 </html>

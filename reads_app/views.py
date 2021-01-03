@@ -26,10 +26,11 @@ def book_info_page(request, book_id):
     }
     return render(request, 'book_info.html', context)
 
-def user_info_page(request, user_id):
+def user_info_page(request, contributor_id):
     context = {
         "user": User.objects.get(id = request.session['user_id']),
-        "author": Author.objects.all(),
+        "review_contributor": User.objects.get(id = contributor_id),
+        "books_contributed": User.objects.get(id = contributor_id).book_added.all()
     }
     return render(request, 'user_info.html', context)
 

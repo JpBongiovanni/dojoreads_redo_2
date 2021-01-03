@@ -1,5 +1,4 @@
 from django.db import models
-from django.db import models
 from registration_app.models import User
 
 class Author(models.Model):

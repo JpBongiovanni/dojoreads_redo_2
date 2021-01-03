@@ -12,12 +12,11 @@
     <h3>Recent Book Reviews:</h3>
 
     {% for review in recent_reviews %}
-        {{review.book.contributor.id}}<br>
         Book Title: <a href="{{review.book.id}}">{{review.book.title}}</a><br>
         Author: {{review.book.author.name}}<br>
-        Contributor: <a href="{{review.book.contributor.id}}">{{review.book.contributor.first_name}} {{review.book.contributor.last_name}}</a><br>
-        <a href="{{review.poster.id}}">{{review.poster.first_name}} {{reviewsposter.last_name}}</a> says: {{review.content}}<br>
-        Rating: {{review.rating}}<br>g
+        Contributor: <a href="user/{{review.book.contributor.id}}">{{review.book.contributor.first_name}} {{review.book.contributor.last_name}}</a><br>
+        <a href="user/{{review.poster.id}}">{{review.poster.first_name}} {{reviewsposter.last_name}}</a> says: {{review.content}}<br>
+        Rating: {{review.rating}}<br>
         Posted on: {{review.created_at}}<br>
 
         <hr>
@@ -27,7 +26,7 @@
     <h3>Other Books with Reviews</h3>
 
     {% for Book in books %}
-            Book Title: <a href="/reads/{{Book.id}}">{{Book.title}}</a><br>
+            Book Title: <a href="{{Book.id}}">{{Book.title}}</a><br>
     {% endfor %}
 
 </body>
