@@ -35,26 +35,43 @@ def user_info_page(request, contributor_id):
     return render(request, 'user_info.html', context)
 
 def add_book_and_review(request):
+    errors = User.objects.validate(request.POST)
     
-    Author.objects.create(
-        name = request.POST['name'],
-    )
-    
+    if errors:
+        for e in errors.values():
+            messages.error(request, e)
+        return redirect('/reads')
+    else:
+        Author.objects.create(
+            name = request.POST['name'],
+        )
+        
     latest_author = Author.objects.last()
 
-    Book.objects.create(
-        title = request.POST['title'],
-        contributor = User.objects.get(id = request.session['user_id']),
-        author = latest_author
-    )
+    if errors:
+        for e in errors.values():
+            messages.error(request, e)
+        return redirect('/reads')
+    else:
+        Book.objects.create(
+            title = request.POST['title'],
+            contributor = User.objects.get(id = request.session['user_id']),
+            author = latest_author
+        )
 
     latest_book = Book.objects.last()
 
-    Review.objects.create(
-        content = request.POST['content'],
-        rating = request.POST['rating'],
-        poster = User.objects.get(id = request.session['user_id']),
-        book = latest_book
+    errors = User.objects.validate(request.POST)
+    if errors:
+        for e in errors.values():
+            messages.error(request, e)
+        return redirect('/reads')
+    else:
+        Review.objects.create(
+            content = request.POST['content'],
+            rating = request.POST['rating'],
+            poster = User.objects.get(id = request.session['user_id']),
+            book = latest_book
     )
 
     return redirect('/reads')

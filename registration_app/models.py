@@ -25,7 +25,7 @@ class UserManager(models.Manager):
         
         if form['password'] != form['confirm']:
             errors['password'] = 'Passwords do not match'
-        
+
         return errors
 
     def authenticate(self, email, password):

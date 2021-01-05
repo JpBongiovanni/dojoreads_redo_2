@@ -4,30 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Books Home</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'logreg/style.css' %}">
 </head>
-<body>
-    <h1>Welcome {{user.first_name}}!</h1>
-    <h3><a href="add_book">Add Book and Review</a></h3>
-    <h3><a href="/">Logout</a></h3>
-    <h3>Recent Book Reviews:</h3>
+<body class="body_home">
+    <div class="container">
+        <h1>Welcome {{user.first_name}}!</h1>
+        <h3><a href="add_book">Add Book and Review</a></h3>
+        <h3><a href="/">Logout</a></h3>
+        <h3>Recent Book Reviews:</h3>
 
-    {% for review in recent_reviews %}
-        Book Title: <a href="{{review.book.id}}">{{review.book.title}}</a><br>
-        Author: {{review.book.author.name}}<br>
-        Contributor: <a href="user/{{review.book.contributor.id}}">{{review.book.contributor.first_name}} {{review.book.contributor.last_name}}</a><br>
-        <a href="user/{{review.poster.id}}">{{review.poster.first_name}} {{reviewsposter.last_name}}</a> says: {{review.content}}<br>
-        Rating: {{review.rating}}<br>
-        Posted on: {{review.created_at}}<br>
+        {% for review in recent_reviews %}
+            Book Title: <a href="{{review.book.id}}">{{review.book.title}}</a><br>
+            Author: {{review.book.author.name}}<br>
+            Contributor: <a href="user/{{review.book.contributor.id}}">{{review.book.contributor.first_name}} {{review.book.contributor.last_name}}</a><br>
+            <a href="user/{{review.poster.id}}">{{review.poster.first_name}} {{reviewsposter.last_name}}</a> says: {{review.content}}<br>
+            Rating: {{review.rating}}<br>
+            Posted on: {{review.created_at}}<br>
 
-        <hr>
-        <hr>
-    {% endfor %}
+            <hr>
+            <hr>
+        {% endfor %}
+    </div>
+    <div class="container2">
+        <h3>Other Books with Reviews</h3>
 
-    <h3>Other Books with Reviews</h3>
-
-    {% for Book in books %}
-            Book Title: <a href="{{Book.id}}">{{Book.title}}</a><br>
-    {% endfor %}
-
+        {% for Book in books %}
+                Book Title: <a href="{{Book.id}}">{{Book.title}}</a><br>
+        {% endfor %}
+    </div>
 </body>
 </html>
